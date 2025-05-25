@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +11,9 @@ export class DashboardComponent {
   sidebarCollapsed = false;
   isDarkMode = false;
   submenuOpen = false;
+  menuOpen = false; // <-- nuevo
 
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, private router: Router) {}
 
   toggleSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;
@@ -28,6 +30,15 @@ export class DashboardComponent {
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }
 

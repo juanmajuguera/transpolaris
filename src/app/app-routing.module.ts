@@ -10,9 +10,11 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivateChild: [authGuard], // Protege rutas hijas
+    canActivateChild: [authGuard], // protege rutas hijas
     children: [
-      { path: '', component: DashboardComponent }
+      { path: '', component: DashboardComponent, data: { role: 'admin' } },
+      // aquí puedes agregar más rutas con diferentes roles
+      // { path: 'user-page', component: UserPageComponent, data: { role: 'user' } }
     ]
   }
 ];
