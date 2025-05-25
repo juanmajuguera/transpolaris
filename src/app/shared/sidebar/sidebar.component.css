@@ -1,0 +1,40 @@
+/* Transición para el contenedor y la imagen del icono */
+aside[class*="w-20"] nav a > div,
+aside[class*="w-20"] nav button > div {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  box-shadow: none !important; /* Eliminar sombra por defecto */
+}
+
+/* Quitar sombra al hacer hover sobre el contenedor del icono (div) en modo colapsado */
+aside[class*="w-20"] nav a:hover > div,
+aside[class*="w-20"] nav button:hover > div {
+  box-shadow: none !important;
+  background-color: inherit !important;
+}
+
+/* Quitar sombra también al hacer hover sobre el enlace o botón padre para evitar efecto sombra */
+aside[class*="w-20"] nav a:hover,
+aside[class*="w-20"] nav button:hover {
+  box-shadow: none !important;
+  background-color: inherit !important;
+}
+
+/* Zoom en la imagen del icono al pasar el ratón (solo en modo colapsado) */
+aside[class*="w-20"] nav a:hover > div img,
+aside[class*="w-20"] nav button:hover > div img {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+/* Asegura que la imagen vuelva a su tamaño normal cuando no está hover */
+aside[class*="w-20"] nav a > div img,
+aside[class*="w-20"] nav button > div img {
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+/* Mantener estilo de iconos SVG */
+.icon {
+  fill: none;
+  stroke: currentColor;
+}

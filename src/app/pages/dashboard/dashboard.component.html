@@ -1,0 +1,56 @@
+<!-- dashboard.component.html -->
+
+<div class="flex flex-col h-full">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
+  
+      <!-- Aquí puedes añadir botones de acciones rápidas, perfil, etc. -->
+      <div class="flex items-center gap-4">
+        <button class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none">
+          <!-- Icono de notificaciones, ejemplo -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+        </button>
+        <img src="assets/icons/user-avatar.png" alt="User Avatar" class="w-8 h-8 rounded-full" />
+      </div>
+    </header>
+  
+    <!-- Main content area -->
+    <section class="flex-1 overflow-auto p-6 bg-gray-50 dark:bg-gray-900">
+  
+      <!-- Puedes añadir aquí cards, gráficos, tablas, etc. -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card ejemplo -->
+        <div class="bg-white dark:bg-gray-800 rounded shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Usuarios activos</h3>
+          <p class="text-3xl font-bold">1,245</p>
+        </div>
+  
+        <div class="bg-white dark:bg-gray-800 rounded shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Ventas del mes</h3>
+          <p class="text-3xl font-bold">$23,450</p>
+        </div>
+  
+        <div class="bg-white dark:bg-gray-800 rounded shadow p-4">
+          <h3 class="text-lg font-semibold mb-2">Tareas pendientes</h3>
+          <p class="text-3xl font-bold">8</p>
+        </div>
+      </div>
+  
+      <!-- Más contenido del dashboard -->
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-4">Actividad reciente</h3>
+        <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+          <li>Usuario Juan creó un nuevo proyecto.</li>
+          <li>Venta realizada: Pedido #12345.</li>
+          <li>Configuración actualizada por María.</li>
+        </ul>
+      </div>
+  
+    </section>
+    
+  </div>
+  
