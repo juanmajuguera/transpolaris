@@ -1,46 +1,45 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiUrl = 'https://desarrollador.juanjuguera.com/server/login.php';
   private isAuthenticated = false;
   private username = '';
   private role = '';
+  private token = '';
 
-  constructor() {
-    const storedAuth = localStorage.getItem('isAuthenticated');
-    const storedUser = localStorage.getItem('username');
-    const storedRole = localStorage.getItem('role');
+  constructor(private http: HttpClient) {
+    const storedAuth = sessionStorage.getItem('isAuthenticated');
+    const storedUser = sessionStorage.getItem('username');
+    const storedRole = sessionStorage.getItem('role');
+    const storedToken = sessionStorage.getItem('token');
 
     this.isAuthenticated = storedAuth === 'true';
     this.username = storedUser || '';
     this.role = storedRole || '';
+    this.token = storedToken || '';
   }
 
-  login(user: string, pass: string): boolean {
-    if (user === 'admin' && pass === '1234') {
-      this.isAuthenticated = true;
-      this.username = 'Juan Pérez | Transpolaris';
-      this.role = 'admin';
+  login(user: string, pass: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { usuario: user, password: pass }).pipe(
+      tap(response => {
+        if (response.success) {
+          this.isAuthenticated = true;
+          this.username = response.user_name;
+          this.role = response.role;
+          this.token = response.token;
 
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('username', this.username);
-      localStorage.setItem('role', this.role);
-
-      return true;
-    } else if (user === 'user' && pass === '1234') {
-      this.isAuthenticated = true;
-      this.username = 'Usuario Normal';
-      this.role = 'user';
-
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('username', this.username);
-      localStorage.setItem('role', this.role);
-
-      return true;
-    }
-    return false;
+          sessionStorage.setItem('isAuthenticated', 'true');
+          sessionStorage.setItem('username', this.username);
+          sessionStorage.setItem('role', this.role);
+          sessionStorage.setItem('token', this.token);
+        }
+      })
+    );
   }
 
   isLoggedIn(): boolean {
@@ -55,13 +54,16 @@ export class AuthService {
     return this.role;
   }
 
+  getToken(): string {
+    return this.token;
+  }
+
   logout(): void {
     this.isAuthenticated = false;
     this.username = '';
     this.role = '';
+    this.token = '';
 
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
+    sessionStorage.clear();
   }
 }

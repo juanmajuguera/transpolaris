@@ -13,11 +13,20 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  login(): void {
-    if (this.auth.login(this.username, this.password)) {
-      this.router.navigate(['/']);
-    } else {
-      this.error = 'Credenciales incorrectas';
+login(): void {
+  this.auth.login(this.username, this.password).subscribe({
+    next: (res) => {
+      console.log('Login response:', res);
+      if (res.success) {
+        this.router.navigate(['/']);
+      } else {
+        this.error = 'Credenciales incorrectas';
+      }
+    },
+    error: (err) => {
+      console.log('Login error:', err);
+      this.error = err?.error?.error || 'Error de conexión o credenciales incorrectas';
     }
-  }
+  });
+}
 }

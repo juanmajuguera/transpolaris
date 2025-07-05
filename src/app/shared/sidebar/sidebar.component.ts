@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,10 +7,15 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Input() collapsed = false;                      // Recibe estado de colapso del padre
-  @Output() collapsedChange = new EventEmitter<boolean>(); // Emite cambios al padre
+  @Input() collapsed = false;                      
+  @Output() collapsedChange = new EventEmitter<boolean>();
 
-  submenuOpen = false;
+  // Cambiamos a objeto para controlar múltiples submenús
+  submenuOpen: { [key: string]: boolean } = {
+    menu: false,
+    servicios: false
+  };
+
   isDarkMode = false;
   private submenuWasCollapsed = false;
 
@@ -20,20 +25,18 @@ export class SidebarComponent {
     this.collapsed = !this.collapsed;
     this.collapsedChange.emit(this.collapsed);
 
-    // Si colapsamos el sidebar, cerramos el submenú también
     if (this.collapsed) {
-      this.submenuOpen = false;
+      // Cerramos todos los submenús al colapsar
+      Object.keys(this.submenuOpen).forEach(key => this.submenuOpen[key] = false);
     }
   }
 
-  toggleSubmenu() {
-    // Si el sidebar está colapsado, lo expandimos temporalmente
+  toggleSubmenu(menu: string) {
     if (this.collapsed) {
       this.submenuWasCollapsed = true;
       this.collapsed = false;
       this.collapsedChange.emit(this.collapsed);
 
-      // Esperamos al siguiente ciclo de renderizado y añadimos evento para volver a colapsar
       setTimeout(() => {
         const aside = document.querySelector('aside');
         if (aside) {
@@ -42,14 +45,20 @@ export class SidebarComponent {
       });
     }
 
-    this.submenuOpen = !this.submenuOpen;
+    // Cerramos otros submenús para que no se abran varios a la vez (opcional)
+    Object.keys(this.submenuOpen).forEach(key => {
+      if (key !== menu) this.submenuOpen[key] = false;
+    });
+
+    // Alternamos el submenú solicitado
+    this.submenuOpen[menu] = !this.submenuOpen[menu];
   }
 
-  // Método que colapsa el sidebar si fue abierto temporalmente
   collapseIfNeeded = () => {
     if (this.submenuWasCollapsed) {
       this.collapsed = true;
-      this.submenuOpen = false;
+      // Cerramos todos los submenús
+      Object.keys(this.submenuOpen).forEach(key => this.submenuOpen[key] = false);
       this.submenuWasCollapsed = false;
       this.collapsedChange.emit(this.collapsed);
 

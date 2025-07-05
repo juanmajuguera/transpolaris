@@ -23,7 +23,7 @@
   <nav class="flex-1 overflow-auto mt-4 px-1">
     <!-- Botón Menú con Submenú -->
     <button
-      (click)="toggleSubmenu()"
+      (click)="toggleSubmenu('menu')"
       class="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
       [ngClass]="{
         'justify-center': collapsed,
@@ -45,7 +45,7 @@
 
       <svg
         *ngIf="!collapsed"
-        [class.rotate-90]="submenuOpen"
+        [class.rotate-90]="submenuOpen['menu']"
         class="ml-auto w-4 h-4 transition-transform"
         fill="none"
         stroke="currentColor"
@@ -60,7 +60,7 @@
 
     <!-- Submenú solo si está abierto y no colapsado -->
     <div
-      *ngIf="submenuOpen && !collapsed"
+      *ngIf="submenuOpen['menu'] && !collapsed"
       class="pl-12 flex flex-col gap-1 mt-1"
     >
       <a
@@ -79,10 +79,10 @@
       </a>
     </div>
 
-    <!-- Enlaces sin submenu -->
-    <a
-      href="#"
-      class="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 mt-4"
+    <!-- Botón Servicios con Submenú -->
+    <button
+      (click)="toggleSubmenu('servicios')"
+      class="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 mt-4 focus:outline-none"
       [ngClass]="{
         'justify-center': collapsed,
         'justify-start': !collapsed
@@ -95,11 +95,54 @@
         <img src="assets/icons/llave-y-destornillador-cruzados.svg" alt="Servicios" class="w-6 h-6" />
       </div>
       <span *ngIf="!collapsed">Servicios</span>
-    </a>
 
+      <svg
+        *ngIf="!collapsed"
+        [class.rotate-90]="submenuOpen['servicios']"
+        class="ml-auto w-4 h-4 transition-transform"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+
+    <!-- Submenú Servicios -->
+    <div
+      *ngIf="submenuOpen['servicios'] && !collapsed"
+      class="pl-12 flex flex-col gap-1 mt-1"
+    >
+      <a
+        href="#"
+        class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+      >
+        <img src="assets/icons/taller.svg" alt="Taller" class="w-4 h-4" />
+        <span>Taller</span>
+      </a>
+      <a
+        href="#"
+        class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+      >
+        <img src="assets/icons/rescates.svg" alt="Rescates" class="w-4 h-4" />
+        <span>Rescates</span>
+      </a>
+      <a
+        href="#"
+        class="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
+      >
+        <img src="assets/icons/traslados.svg" alt="Traslados" class="w-4 h-4" />
+        <span>Traslados</span>
+      </a>
+    </div>
+
+    <!-- Enlace Ajustes sin submenu -->
     <a
       href="#"
-      class="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 mt-2"
+      class="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 mt-4"
       [ngClass]="{
         'justify-center': collapsed,
         'justify-start': !collapsed
